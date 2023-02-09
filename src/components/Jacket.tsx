@@ -1,23 +1,23 @@
-import { IPathProps } from "../App";
+import { IPathsProps } from "../App";
 
-const MainBodySvg = (props: IPathProps) => {
-  const blackStrokeStyle = {
-    stroke: "black",
-    fill: "#ffffff",
-  };
+const jacketSvgProps = {
+  id: "jacket_svg",
+  className: "jacket",
+  viewBox: "-2 0 190 160",
+  preserveAspectRatio: "xMinYMin meet",
+  height: "250",
+  width: "250",
+};
 
-  console.log(props.d);
+const blackStrokeStyle = {
+  stroke: "black",
+  fill: "#ffffff",
+};
 
+const renderJacket = (props: IPathsProps) => {
+  const { pathInfo } = props;
   return (
-    <svg
-      id='mainbodysvg'
-      className='body'
-      viewBox='-2 0 190 160'
-      preserveAspectRatio='xMinYMin meet'
-      height='250'
-      width='250'
-      style={{ float: "left" }}
-    >
+    <svg {...jacketSvgProps} style={{ float: "left" }}>
       <defs>
         <clipPath id='clipPath14471123691'></clipPath>
         <clipPath id='clipPath14471123692'></clipPath>
@@ -81,13 +81,22 @@ const MainBodySvg = (props: IPathProps) => {
               id='idb3d'
               style={blackStrokeStyle}
             ></path>
-            <path id='ideb' d={props.d[0]} style={blackStrokeStyle}></path>
+            {pathInfo?.map((path, index) => {
+              console.log(path);
+              return (
+                <path
+                  id='ideb'
+                  key={index}
+                  d={path.d}
+                  style={blackStrokeStyle}
+                ></path>
+              );
+            })}
             <g
               style={{
                 clipPath: "url(#clipPath14471123691)",
               }}
             />
-
             <g
               style={{
                 clipPath: "url(#clipPath14471123692)",
@@ -101,7 +110,6 @@ const MainBodySvg = (props: IPathProps) => {
           clipPath: "url(#clipPath14471123693)",
         }}
       />
-
       <g
         style={{
           clipPath: "url(#clipPath14471123694)",
@@ -111,4 +119,9 @@ const MainBodySvg = (props: IPathProps) => {
   );
 };
 
-export default MainBodySvg;
+// Jacket
+const Jacket = (props: IPathsProps) => {
+  return renderJacket(props);
+};
+
+export default Jacket;

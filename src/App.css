@@ -29,6 +29,14 @@
   height: auto;
 }
 
+.DressPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
 div .color {
   border: 1px solid #111;
   border-radius: 0.2em;
