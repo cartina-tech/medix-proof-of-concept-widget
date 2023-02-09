@@ -8,11 +8,13 @@ import Jacket from "./components/Jacket";
 import ColorPalette from "./components/ColorPalette";
 import MiniJacket from "./components/MiniJacket";
 
-export interface IPathsProps {
-  pathInfo: IVariation[];
+export interface IJacketProps {
+  id: number;
+  jacketVariation: IVariation[];
 }
 
 export interface IVariation {
+  transform: string;
   d: string;
 }
 
@@ -22,15 +24,18 @@ interface IJacketVariations {
 
 const jacketVariatonTwo: IVariation[] = [
   {
+    transform: "",
     d: "M 76.015495,8.4171064 C 77.286657,147.73647 77.032424,147.73647 77.032424,147.73647 l -0.254232,0.25423 30.253658,0 -0.25423,-139.3193612 0.76269,0.2542324 z",
   },
 ];
 
 const jacketVariationThree: IVariation[] = [
   {
+    transform: "",
     d: "M 91.777905,8.6713388 92.28637,148.49917 107.03185,148.24494 106.77762,8.6713388 Z",
   },
   {
+    transform: "",
     d: "M 91.777905,9.4340361 C 92.28637,147.99071 92.28637,147.99071 92.28637,147.99071 L 77.032424,148.49917 76.015495,8.6713388 Z",
   },
 ];
@@ -38,11 +43,11 @@ const jacketVariationThree: IVariation[] = [
 const jacketVariations = [jacketVariatonTwo, jacketVariationThree];
 
 function App() {
-  const [jacketPaths, setJacketPaths] = useState<IPathsProps>();
+  const [jacketPaths, setJacketPaths] = useState<IVariation[]>();
   const [helmetFocused, setHelmetFocused] = useState<boolean>(false);
 
-  const onClickMiniJacket = (path: IPathsProps) => {
-    setJacketPaths(path);
+  const onClickMiniJacket = (props: IJacketProps) => {
+    setJacketPaths(props.jacketVariation);
   };
 
   return (
@@ -55,7 +60,7 @@ function App() {
               setHelmetIsFocused: setHelmetFocused,
             }}
           />
-          <Jacket {...jacketPaths!} />
+          <Jacket jacketVariation={jacketPaths || []} />
         </div>
         <div className='RightPanel'>
           <ColorPalette />
@@ -64,7 +69,8 @@ function App() {
               key={0}
               onClick={() =>
                 onClickMiniJacket({
-                  pathInfo: [],
+                  id: 0,
+                  jacketVariation: [],
                 })
               }
               jacketVariation={[]}
@@ -75,7 +81,8 @@ function App() {
                   key={index + 1}
                   onClick={() =>
                     onClickMiniJacket({
-                      pathInfo: variation,
+                      id: index,
+                      jacketVariation: variation,
                     })
                   }
                   jacketVariation={variation}

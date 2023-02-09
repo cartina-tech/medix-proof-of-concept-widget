@@ -20,8 +20,16 @@ const MiniJacket = (props: IMiniJacket) => {
 
   const handleJacketClick = () => {
     onClick();
+
     setMiniJacketSelected((prev) => (prev = !prev));
-    setMiniJacketClicks((prevClicks) => prevClicks + 1);
+
+    if (miniJacketClicks <= 3) {
+      if (miniJacketClicks === 3) {
+        setMiniJacketClicks(0);
+        return;
+      }
+      setMiniJacketClicks((prevClicks) => prevClicks + 1);
+    }
   };
 
   let miniJacketStyle = {
@@ -74,11 +82,10 @@ const MiniJacket = (props: IMiniJacket) => {
                 d='m370.6,488.16-10.029-1.7969c-1.7578,0.603-2.9859,1.9239-2.9859,3.4669,0,2.1105,2.2864,3.8207,5.105,3.8207h11.964c0.13551-0.25999,0.243-0.5335,0.29538-0.82887,0.37363-2.0776-1.5746-4.165-4.3492-4.6619z'
               ></path>
               {jacketVariation?.map((path, index) => {
-                console.log(`mini-jacket-variation-${index}`);
                 return (
                   <path
                     id={`mini-jacket-${index}`}
-                    key={index}
+                    key={`mini-jacket-path-${index}`}
                     d={path.d}
                     style={blackStrokeStyle}
                   ></path>

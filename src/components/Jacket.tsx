@@ -1,4 +1,4 @@
-import { IPathsProps } from "../App";
+import { IJacketProps } from "../App";
 
 const jacketSvgProps = {
   id: "jacket_svg",
@@ -14,8 +14,9 @@ const blackStrokeStyle = {
   fill: "#ffffff",
 };
 
-const renderJacket = (props: IPathsProps) => {
-  const { pathInfo } = props;
+const renderJacket = (props: IJacketProps) => {
+  const { jacketVariation } = props;
+
   return (
     <svg {...jacketSvgProps} style={{ float: "left" }}>
       <defs>
@@ -81,13 +82,14 @@ const renderJacket = (props: IPathsProps) => {
               id='idb3d'
               style={blackStrokeStyle}
             ></path>
-            {pathInfo?.map((path, index) => {
-              console.log(path);
+            {jacketVariation?.map((variation, index) => {
+              const { d, transform } = variation;
               return (
                 <path
                   id='ideb'
                   key={index}
-                  d={path.d}
+                  transform={transform}
+                  d={d}
                   style={blackStrokeStyle}
                 ></path>
               );
