@@ -10,26 +10,22 @@ import MiniJacket from "./components/MiniJacket";
 
 export interface IJacketProps {
   currentId?: string;
-  jacketVariation: IVariation[];
+  jacketPattern: IBasicPattern[];
 }
 
-export interface IVariation {
+export interface IBasicPattern {
   transform: string;
   d: string;
 }
 
-interface IJacketVariations {
-  [index: number]: IVariation[];
-}
-
-const jacketVariatonTwo: IVariation[] = [
+const jacketPatternTwo: IBasicPattern[] = [
   {
     transform: "",
     d: "M 76.015495,8.4171064 C 77.286657,147.73647 77.032424,147.73647 77.032424,147.73647 l -0.254232,0.25423 30.253658,0 -0.25423,-139.3193612 0.76269,0.2542324 z",
   },
 ];
 
-const jacketVariationThree: IVariation[] = [
+const jacketPatternThree: IBasicPattern[] = [
   {
     transform: "",
     d: "m 122.68486,10.839626 -0.32847,137.466174 -15.60249,0 0,-140.2581986 c 17.24653,2.8155036 11.53061,1.9229126 15.93096,2.7920246 z",
@@ -40,7 +36,7 @@ const jacketVariationThree: IVariation[] = [
   },
 ];
 
-const jacketVariationFour: IVariation[] = [
+const jacketPatternFour: IBasicPattern[] = [
   {
     transform: "translate(-283.3125,-484.65625)",
     d: "m 346.99147,494.71879 -5.3682,1.4337 -6.04997,2.11777 7.15386,134.62845 11.7813,-0.12854 -7.38886,-138.53868 z",
@@ -59,15 +55,23 @@ const jacketVariationFour: IVariation[] = [
   },
 ];
 
-// array of variations
-const jacketVariations = [
-  jacketVariatonTwo,
-  jacketVariationThree,
-  jacketVariationFour,
+const jacketPatternFive: IBasicPattern[] = [
+  {
+    transform: "",
+    d: "m 40.540541,56.538382 c 101.441439,-0.18018 101.441439,-0.18018 101.441439,-0.18018 l -6.66666,32.252252 -88.648653,0 z",
+  },
+];
+
+// array of basic patterns
+const jacketBasicPatterns = [
+  jacketPatternTwo,
+  jacketPatternThree,
+  jacketPatternFour,
+  jacketPatternFive,
 ];
 
 function App() {
-  const [jacketPaths, setJacketPaths] = useState<IVariation[]>();
+  const [jacketPaths, setJacketPaths] = useState<IBasicPattern[]>();
   const [helmetFocused, setHelmetFocused] = useState<boolean>(false);
   const [miniJacketSelected, setMiniJacketSelected] = useState({
     id: "",
@@ -79,24 +83,25 @@ function App() {
       id: props.currentId || "",
       selected: true,
     });
-    setJacketPaths(props.jacketVariation);
+    setJacketPaths(props.jacketPattern);
   };
 
   return (
     <>
       <div className='App'>
-        <div className='DressPanel'>
+        <div className='dressPanel'>
           <Helmet
             {...{
               helmetIsFocused: helmetFocused,
               setHelmetIsFocused: setHelmetFocused,
             }}
           />
-          <Jacket jacketVariation={jacketPaths || []} />
+          <Jacket jacketPattern={jacketPaths || []} />
         </div>
-        <div className='RightPanel'>
+        <div className='rightPanel'>
           <ColorPalette />
-          <div className='JacketVariations'>
+          <div className='jacketPatterns'>
+            <p className='patternTitle'>Välj jacka, grundmönster</p>
             <MiniJacket
               key={0}
               isSelected={`mini-jacket-0` === miniJacketSelected.id}
@@ -104,29 +109,31 @@ function App() {
               onClick={() =>
                 onClickMiniJacket({
                   currentId: `mini-jacket-0`,
-                  jacketVariation: [],
+                  jacketPattern: [],
                 })
               }
-              jacketVariation={[]}
+              jacketPattern={[]}
             />
-            {jacketVariations.map((variation: IVariation[], index: number) => {
-              return (
-                <MiniJacket
-                  key={index + 1}
-                  isSelected={
-                    `mini-jacket-${index + 1}` === miniJacketSelected.id
-                  }
-                  id={`mini-jacket-${index + 1}`}
-                  onClick={() =>
-                    onClickMiniJacket({
-                      currentId: `mini-jacket-${index + 1}`,
-                      jacketVariation: variation,
-                    })
-                  }
-                  jacketVariation={variation}
-                />
-              );
-            })}
+            {jacketBasicPatterns.map(
+              (pattern: IBasicPattern[], index: number) => {
+                return (
+                  <MiniJacket
+                    key={index + 1}
+                    isSelected={
+                      `mini-jacket-${index + 1}` === miniJacketSelected.id
+                    }
+                    id={`mini-jacket-${index + 1}`}
+                    onClick={() =>
+                      onClickMiniJacket({
+                        currentId: `mini-jacket-${index + 1}`,
+                        jacketPattern: pattern,
+                      })
+                    }
+                    jacketPattern={pattern}
+                  />
+                );
+              }
+            )}
           </div>
         </div>
       </div>

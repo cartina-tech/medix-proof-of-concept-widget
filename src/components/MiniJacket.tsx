@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { IVariation } from "../App";
+import { IBasicPattern } from "../App";
 
 export interface IMiniJacket {
   id: string;
   isSelected: boolean;
-  jacketVariation?: IVariation[];
+  jacketPattern?: IBasicPattern[];
   onClick: () => void;
 }
 
@@ -14,12 +14,12 @@ const blackStrokeStyle = {
 };
 
 const MiniJacket = (props: IMiniJacket) => {
-  const { jacketVariation, id, onClick } = props;
+  const { jacketPattern, id, isSelected, onClick } = props;
   const [miniJacketClicks, setMiniJacketClicks] = useState<number>(0);
   const selectedBorderColor = "#5ca7bd";
 
-  const handleJacketClick = (currentId: string) => {
-    console.log(currentId);
+  const handleJacketClick = (props: { currentId: string }) => {
+    console.log(props.currentId);
     onClick();
     if (miniJacketClicks <= 3) {
       if (miniJacketClicks === 3) {
@@ -32,11 +32,9 @@ const MiniJacket = (props: IMiniJacket) => {
 
   let miniJacketStyle = {
     cursor: "pointer",
-    border: `0.15em solid ${
-      props.isSelected ? selectedBorderColor : "transparent"
-    }`,
+    border: `0.15em solid ${isSelected ? selectedBorderColor : "transparent"}`,
     borderRadius: "0.5em",
-    background: props.isSelected ? "#eee" : "none",
+    background: isSelected ? "#eee" : "none",
   };
 
   return (
@@ -78,7 +76,7 @@ const MiniJacket = (props: IMiniJacket) => {
                 transform='translate(-283.3125,-484.65625)'
                 d='m370.6,488.16-10.029-1.7969c-1.7578,0.603-2.9859,1.9239-2.9859,3.4669,0,2.1105,2.2864,3.8207,5.105,3.8207h11.964c0.13551-0.25999,0.243-0.5335,0.29538-0.82887,0.37363-2.0776-1.5746-4.165-4.3492-4.6619z'
               ></path>
-              {jacketVariation?.map((path, index) => {
+              {jacketPattern?.map((path, index) => {
                 return (
                   <path
                     id={`mini-jacket-${index}`}

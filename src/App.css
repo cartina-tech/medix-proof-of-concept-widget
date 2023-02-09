@@ -9,7 +9,7 @@
   display: flex;
 }
 
-.JacketVariations {
+.jacketPatterns {
   display: flex;
   flex-wrap: wrap;
 }
@@ -19,7 +19,7 @@
   margin-right: 0.6em;
 }
 
-.RightPanel {
+.rightPanel {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   height: auto;
 }
 
-.DressPanel {
+.dressPanel {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,7 +38,8 @@
 }
 
 div .color {
-  border: 1px solid #111;
+  cursor: pointer;
+  border: 1px solid #111111;
   border-radius: 0.2em;
   padding: 0.1em;
   width: 1.5em;
@@ -50,7 +51,13 @@ div .color {
   margin: 4px;
 }
 
-.colorpalette {
+.patternTitle {
+  display: flex;
+  flex-basis: 100%;
+  justify-self: flex-start;
+}
+
+.colorPalette {
   display: flex;
   align-items: center;
   justify-content: center;

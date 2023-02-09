@@ -15,7 +15,7 @@ const blackStrokeStyle = {
 };
 
 const renderJacket = (props: IJacketProps) => {
-  const { jacketVariation } = props;
+  const { jacketPattern: jacketPatterns } = props;
 
   return (
     <svg {...jacketSvgProps} style={{ float: "left", cursor: "pointer" }}>
@@ -82,11 +82,11 @@ const renderJacket = (props: IJacketProps) => {
               id='idb3d'
               style={blackStrokeStyle}
             ></path>
-            {jacketVariation?.map((variation, index) => {
-              const { d, transform } = variation;
+            {jacketPatterns?.map((pattern, index) => {
+              const { d, transform } = pattern;
               return (
                 <path
-                  id='ideb'
+                  id={`jacket-pattern-${index + 1}`}
                   key={index}
                   transform={transform}
                   d={d}
