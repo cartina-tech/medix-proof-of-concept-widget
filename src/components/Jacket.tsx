@@ -18,7 +18,7 @@ const renderJacket = (props: IJacketProps) => {
   const { jacketVariation } = props;
 
   return (
-    <svg {...jacketSvgProps} style={{ float: "left" }}>
+    <svg {...jacketSvgProps} style={{ float: "left", cursor: "pointer" }}>
       <defs>
         <clipPath id='clipPath14471123691'></clipPath>
         <clipPath id='clipPath14471123692'></clipPath>
@@ -122,7 +122,7 @@ const renderJacket = (props: IJacketProps) => {
 };
 
 // Jacket
-const Jacket = (props: IPathsProps) => {
+const Jacket = (props: IJacketProps) => {
   return renderJacket(props);
 };
 

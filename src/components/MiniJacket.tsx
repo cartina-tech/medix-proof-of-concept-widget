@@ -2,6 +2,8 @@ import { useState } from "react";
 import { IVariation } from "../App";
 
 export interface IMiniJacket {
+  id: string;
+  isSelected: boolean;
   jacketVariation?: IVariation[];
   onClick: () => void;
 }
@@ -12,17 +14,13 @@ const blackStrokeStyle = {
 };
 
 const MiniJacket = (props: IMiniJacket) => {
-  const { jacketVariation, onClick } = props;
-
-  const [miniJacketSelected, setMiniJacketSelected] = useState<boolean>(false);
+  const { jacketVariation, id, onClick } = props;
   const [miniJacketClicks, setMiniJacketClicks] = useState<number>(0);
   const selectedBorderColor = "#5ca7bd";
 
-  const handleJacketClick = () => {
+  const handleJacketClick = (currentId: string) => {
+    console.log(currentId);
     onClick();
-
-    setMiniJacketSelected((prev) => (prev = !prev));
-
     if (miniJacketClicks <= 3) {
       if (miniJacketClicks === 3) {
         setMiniJacketClicks(0);
@@ -35,23 +33,22 @@ const MiniJacket = (props: IMiniJacket) => {
   let miniJacketStyle = {
     cursor: "pointer",
     border: `0.15em solid ${
-      miniJacketSelected ? selectedBorderColor : "transparent"
+      props.isSelected ? selectedBorderColor : "transparent"
     }`,
     borderRadius: "0.5em",
-    background: miniJacketSelected ? "#eee" : "none",
+    background: props.isSelected ? "#eee" : "none",
   };
 
   return (
     <>
-      {" "}
       {`${miniJacketClicks}`}
       <svg
-        onClick={handleJacketClick}
+        onClick={() => handleJacketClick({ currentId: id })}
         viewBox='0 0 183 158'
         preserveAspectRatio='xMinYMin meet'
         height='43'
         width='48'
-        id='id27'
+        id={id}
         style={miniJacketStyle}
       >
         <g id='id5f' style={{ fill: "#FFF" }}>
@@ -86,6 +83,7 @@ const MiniJacket = (props: IMiniJacket) => {
                   <path
                     id={`mini-jacket-${index}`}
                     key={`mini-jacket-path-${index}`}
+                    transform={path.transform}
                     d={path.d}
                     style={blackStrokeStyle}
                   ></path>
