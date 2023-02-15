@@ -7,7 +7,7 @@ import Jacket from "./components/Jacket";
 
 import ColorPalette from "./components/ColorPalette";
 
-import { IBasicPattern, IDecor, jacketDecors } from "./components/consts";
+import { IBasicPattern, IDecor } from "./components/consts";
 
 import ListBasic from "./components/ListBasic";
 import ListDecor from "./components/ListDecor";
