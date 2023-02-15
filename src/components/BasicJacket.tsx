@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { IBasicPattern } from "../App";
+import { IBasicPattern } from "./consts";
 
-export interface IMiniJacket {
+export interface IBasicJacket {
   id: string;
   isSelected: boolean;
-  jacketPattern?: IBasicPattern[];
+  pattern?: IBasicPattern[];
   onClick: () => void;
 }
 
@@ -13,24 +13,23 @@ const blackStrokeStyle = {
   fill: "#ffffff",
 };
 
-const MiniJacket = (props: IMiniJacket) => {
-  const { jacketPattern, id, isSelected, onClick } = props;
-  const [miniJacketClicks, setMiniJacketClicks] = useState<number>(0);
+const BasicJacket = (props: IBasicJacket) => {
+  const { pattern, id, isSelected, onClick } = props;
+  const [basicJacketClicks, setBasicJacketClicks] = useState<number>(0);
   const selectedBorderColor = "#5ca7bd";
 
-  const handleJacketClick = (props: { currentId: string }) => {
-    console.log(props.currentId);
+  const handleBasicClick = (props: { currentId: string }) => {
     onClick();
-    if (miniJacketClicks <= 3) {
-      if (miniJacketClicks === 3) {
-        setMiniJacketClicks(0);
+    if (basicJacketClicks <= 3) {
+      if (basicJacketClicks === 3) {
+        setBasicJacketClicks(0);
         return;
       }
-      setMiniJacketClicks((prevClicks) => prevClicks + 1);
+      setBasicJacketClicks((prevClicks) => prevClicks + 1);
     }
   };
 
-  let miniJacketStyle = {
+  let basicJacketStyle = {
     cursor: "pointer",
     border: `0.15em solid ${isSelected ? selectedBorderColor : "transparent"}`,
     borderRadius: "0.5em",
@@ -39,15 +38,15 @@ const MiniJacket = (props: IMiniJacket) => {
 
   return (
     <>
-      {`${miniJacketClicks}`}
+      {`${basicJacketClicks}`}
       <svg
-        onClick={() => handleJacketClick({ currentId: id })}
+        onClick={() => handleBasicClick({ currentId: id })}
         viewBox='0 0 183 158'
         preserveAspectRatio='xMinYMin meet'
         height='43'
         width='48'
         id={id}
-        style={miniJacketStyle}
+        style={basicJacketStyle}
       >
         <g id='id5f' style={{ fill: "#FFF" }}>
           <g id='id60'>
@@ -76,7 +75,7 @@ const MiniJacket = (props: IMiniJacket) => {
                 transform='translate(-283.3125,-484.65625)'
                 d='m370.6,488.16-10.029-1.7969c-1.7578,0.603-2.9859,1.9239-2.9859,3.4669,0,2.1105,2.2864,3.8207,5.105,3.8207h11.964c0.13551-0.25999,0.243-0.5335,0.29538-0.82887,0.37363-2.0776-1.5746-4.165-4.3492-4.6619z'
               ></path>
-              {jacketPattern?.map((path, index) => {
+              {pattern?.map((path, index) => {
                 return (
                   <path
                     id={`mini-jacket-${index}`}
@@ -95,4 +94,4 @@ const MiniJacket = (props: IMiniJacket) => {
   );
 };
 
-export default MiniJacket;
+export default BasicJacket;

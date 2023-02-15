@@ -1,4 +1,4 @@
-import { IJacketProps } from "../App";
+import { IJacketProps, patternTypes } from "../App";
 
 const jacketSvgProps = {
   id: "jacket_svg",
@@ -15,7 +15,9 @@ const blackStrokeStyle = {
 };
 
 const renderJacket = (props: IJacketProps) => {
-  const { jacketPattern: jacketPatterns } = props;
+  const { patterns, currentDecor, type } = props;
+
+  console.log(currentDecor);
 
   return (
     <svg {...jacketSvgProps} style={{ float: "left", cursor: "pointer" }}>
@@ -82,7 +84,7 @@ const renderJacket = (props: IJacketProps) => {
               id='idb3d'
               style={blackStrokeStyle}
             ></path>
-            {jacketPatterns?.map((pattern, index) => {
+            {patterns?.map((pattern, index) => {
               const { d, transform } = pattern;
               return (
                 <path
@@ -94,6 +96,19 @@ const renderJacket = (props: IJacketProps) => {
                 ></path>
               );
             })}
+            {type === patternTypes.DECOR &&
+              currentDecor?.map((patterns, index) => {
+                const { d, transform } = patterns;
+                return (
+                  <path
+                    id={`jacket-pattern-${index + 1}`}
+                    key={index}
+                    transform={transform}
+                    d={d}
+                    style={blackStrokeStyle}
+                  ></path>
+                );
+              })}
             <g
               style={{
                 clipPath: "url(#clipPath14471123691)",

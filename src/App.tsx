@@ -5,30 +5,38 @@ import "./App.css";
 import Helmet from "./components/Helmet";
 import Jacket from "./components/Jacket";
 
-import MiniJacket from "./components/MiniJacket";
 import ColorPalette from "./components/ColorPalette";
-import { IBasicPattern, jacketBasicPatterns } from "./components/consts";
+
+import { IBasicPattern, IDecor, jacketDecors } from "./components/consts";
+
+import ListBasic from "./components/ListBasic";
+import ListDecor from "./components/ListDecor";
 
 export interface IJacketProps {
   currentId?: string;
-  jacketPattern: IBasicPattern[];
+  patterns: IBasicPattern[];
+  decors?: IDecor[][];
+  type?: patternTypes;
+  currentDecor?: IDecor[];
+}
+
+export interface ISelectedJacket {
+  id: string;
+  pattern: IBasicPattern[];
+  type?: patternTypes;
+  decors?: IDecor[][];
+  currentDecor?: IDecor[];
+}
+
+export enum patternTypes {
+  BASIC,
+  DECOR,
+  ADDITIONAL,
 }
 
 function App() {
-  const [jacketPaths, setJacketPaths] = useState<IBasicPattern[]>();
   const [helmetFocused, setHelmetFocused] = useState<boolean>(false);
-  const [miniJacketSelected, setMiniJacketSelected] = useState({
-    id: "",
-    selected: false,
-  });
-
-  const onClickMiniJacket = (props: IJacketProps) => {
-    setMiniJacketSelected({
-      id: props.currentId || "",
-      selected: true,
-    });
-    setJacketPaths(props.jacketPattern);
-  };
+  const [selectedJacket, setSelectedJacket] = useState<ISelectedJacket>();
 
   return (
     <>
@@ -40,44 +48,25 @@ function App() {
               setHelmetIsFocused: setHelmetFocused,
             }}
           />
-          <Jacket jacketPattern={jacketPaths || []} />
+          <Jacket
+            decors={selectedJacket?.decors || []}
+            patterns={selectedJacket?.pattern || []}
+            type={selectedJacket?.type}
+            currentDecor={selectedJacket?.currentDecor}
+          />
         </div>
         <div className='rightPanel'>
           <ColorPalette />
           <div className='jacketPatterns'>
             <p className='patternTitle'>Välj jacka, grundmönster</p>
-            <MiniJacket
-              key={0}
-              isSelected={`mini-jacket-0` === miniJacketSelected.id}
-              id={`mini-jacket-0`}
-              onClick={() =>
-                onClickMiniJacket({
-                  currentId: `mini-jacket-0`,
-                  jacketPattern: [],
-                })
-              }
-              jacketPattern={[]}
+            <ListBasic
+              setSelectedJacket={setSelectedJacket}
+              selectedJacket={selectedJacket}
             />
-            {jacketBasicPatterns.map(
-              (pattern: IBasicPattern[], index: number) => {
-                return (
-                  <MiniJacket
-                    key={index + 1}
-                    isSelected={
-                      `mini-jacket-${index + 1}` === miniJacketSelected.id
-                    }
-                    id={`mini-jacket-${index + 1}`}
-                    onClick={() =>
-                      onClickMiniJacket({
-                        currentId: `mini-jacket-${index + 1}`,
-                        jacketPattern: pattern,
-                      })
-                    }
-                    jacketPattern={pattern}
-                  />
-                );
-              }
-            )}
+            <ListDecor
+              setSelectedJacket={setSelectedJacket}
+              selectedJacket={selectedJacket}
+            />
           </div>
         </div>
       </div>
